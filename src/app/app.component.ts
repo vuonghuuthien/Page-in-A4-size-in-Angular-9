@@ -32,7 +32,7 @@ export class AppComponent implements AfterViewInit {
     document.getElementById('content-' + i).focus();
   }
 
-  inputContent(inputContent, i) {
+  inputContent(char, i) {
     var heightContent = document.getElementById('content-' + i).offsetHeight * 2.54 / 96; // Convert pixels to cm
 
     if (heightContent > this.heightA4WithoutPadding) {
@@ -43,10 +43,10 @@ export class AppComponent implements AfterViewInit {
           full: false
         })
         this.currentPage = i + 1;
-        this.inputContent(inputContent, i + 1);
+        this.inputContent(char, i + 1);
       }
     } else {
-      this.pages[i].content += inputContent;
+      this.pages[i].content += char;
     }
   }
 

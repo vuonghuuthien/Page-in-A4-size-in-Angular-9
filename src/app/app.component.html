@@ -7,6 +7,6 @@
   [style.paddingLeft]="paddingPage.left + 'cm'"
   (click)="clickA4(i)">
   <div class="content" [id]="'content-' + i" contenteditable="true"
-    [textContent]="model" (input)="inputContent($event.data, i)">
+    (input)="inputContent($event.data, i)">
   </div>
 </div>

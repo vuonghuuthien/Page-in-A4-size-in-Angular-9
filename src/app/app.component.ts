@@ -1,35 +1,33 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
-  // unit cm
+export class AppComponent implements AfterViewChecked {
+
   sizePage = {
-    width: 21,
-    height: 29.7
+    width: 21, //cm
+    height: 29.7 //cm
   }
   paddingPage = {
-    top: 2, 
-    right: 2, 
-    bottom: 2, 
-    left: 2
+    top: 2, //cm
+    right: 2, //cm
+    bottom: 2, //cm
+    left: 2 //cm
   }
   pages = [
     {
-      content: "",
       full: false
     },
   ]
   currentPage = 0;
 
-  heightA4WithoutPadding =  this.sizePage.height - (this.paddingPage.top + this.paddingPage.bottom);
+  heightA4WithoutPadding = this.sizePage.height - (this.paddingPage.top + this.paddingPage.bottom);
   
   clickA4(i) {
     this.currentPage = i;
-    document.getElementById('content-' + i).focus();
   }
 
   inputContent(char, i) {
@@ -39,18 +37,14 @@ export class AppComponent implements AfterViewInit {
       this.pages[i].full = true;
       if (!this.pages[i + 1]) {
         this.pages.push({
-          content: "",
           full: false
         })
-        this.currentPage = i + 1;
-        this.inputContent(char, i + 1);
       }
-    } else {
-      this.pages[i].content += char;
+      this.currentPage = i + 1;
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
     document.getElementById('content-' + this.currentPage).focus();
   }
 }

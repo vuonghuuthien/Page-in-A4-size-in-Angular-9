@@ -1,12 +1,13 @@
 <div class="page" *ngFor="let page of pages; index as i"
   [style.height]="sizePage.height + 'cm'"
   [style.width]="sizePage.width + 'cm'"
-  [style.paddingTop]="paddingPage.top + 'cm'"
-  [style.paddingRight]="paddingPage.right + 'cm'"
-  [style.paddingBottom]="paddingPage.bottom + 'cm'"
-  [style.paddingLeft]="paddingPage.left + 'cm'"
   (click)="clickA4(i)">
-  <div class="content" [id]="'content-' + i" contenteditable="true"
+  <div class="content" 
+    [style.paddingTop]="paddingPage.top + 'cm'"
+    [style.paddingRight]="paddingPage.right + 'cm'"
+    [style.paddingBottom]="paddingPage.bottom + 'cm'"
+    [style.paddingLeft]="paddingPage.left + 'cm'"  
+    [id]="'content-' + i" contenteditable="true"
     (input)="inputContent($event.data, i)">
   </div>
 </div>

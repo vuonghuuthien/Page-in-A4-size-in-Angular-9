@@ -31,9 +31,11 @@ export class AppComponent implements AfterViewChecked {
   }
 
   inputContent(char, i) {
-    var heightContent = document.getElementById('content-' + i).offsetHeight * 2.54 / 96; // Convert pixels to cm
+    var element = document.getElementById('content-' + i)
+    var heightContent = element.offsetHeight * 2.54 / 96; // Convert pixels to cm
 
     if (heightContent > this.heightA4WithoutPadding) {
+      element.textContent = element.textContent.substring(0, element.textContent.length - 1);
       this.pages[i].full = true;
       if (!this.pages[i + 1]) {
         this.pages.push({

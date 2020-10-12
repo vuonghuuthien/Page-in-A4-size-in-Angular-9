@@ -1,12 +1,12 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'], 
+  encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements AfterViewChecked {
-
+export class AppComponent implements OnInit, AfterViewInit {
   sizePage = {
     width: 21, //cm
     height: 29.7 //cm
@@ -19,59 +19,69 @@ export class AppComponent implements AfterViewChecked {
   }
   pages = [
     {
-      htmlContent: null,
-      full: false
-    },
+      content: []
+    }
   ]
-  currentPage = 0;
-  currentChar = null;
 
-  runAfterViewChecked = false;
+  data = [
+    {
+      title: "Name",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }
+  ]
+
+  constructor (private renderer: Renderer2){
+
+  }
   
-  clickA4(i) {
-    this.currentPage = i;
+  ngOnInit() {
+    
   }
 
-  inputContent(char, i) {
-    var element = document.getElementById('content-' + i)
-    var heightContent = element.offsetHeight * 2.54 / 96; // Convert pixels to cm
-    this.pages[i].htmlContent = element.innerHTML;
-    console.log(this.pages);
-    if (Number(heightContent.toFixed(1)) > this.sizePage.height) { 
-      this.currentChar = char;
-      this.pages[i].full = true;
-      if (!this.pages[i + 1]) {
-        this.pages.push({
-          htmlContent: null,
-          full: false
-        })
-      }
-      this.currentPage = i + 1;
-      this.runAfterViewChecked = true;
+  ngAfterViewInit() {
+    this.insertContentBlock();
+  }
+
+  insertContentBlock() {
+    var iPage = 0; 
+    var iBlock = 0; 
+    var page = document.getElementById('page-' + iPage + '-content'); 
+    var nodes = "";
+    for (let i = 0; i < this.data.length; i++) {
+      nodes += `<div class="block" [id]="page-${iPage}-content-block-${iBlock}"
+        (input)="inputBlock(${iPage}, ${iBlock})">
+        <div class="title">${this.data[i].title}</div>
+        <div class="value" contenteditable>${this.data[i].value}</div>
+      </div>`
     }
+    // nodes += `<button type="button" class="buttonAdd" (click)="addBlock()">Add Block</button>`;
+
+    page.innerHTML = nodes;
+    
+
   }
 
-  ngAfterViewChecked() {
-    document.getElementById('content-' + this.currentPage).focus();
-    if (this.runAfterViewChecked) {
-      if (this.currentChar) {
-        var str = this.pages[this.currentPage-1].htmlContent;
-        var index = str.lastIndexOf("</div>");
-        if (index != -1)
-          str = str.slice(0, index-1) + str.slice(index);
-        else 
-          str = str.slice(0, str.length - 1);
-        this.pages[this.currentPage-1].htmlContent = str;
-
-        this.pages[this.currentPage].htmlContent = this.currentChar + this.pages[this.currentPage].htmlContent;
-      }
-
-      var element = null;
-      for (let i = 0; i < this.pages.length; i++) {
-        element = document.getElementById('content-' + i);
-        element.innerHTML = this.pages[i].htmlContent;
-      }
-      this.runAfterViewChecked = false;
-    }
+  clickA4(iPage) {
+    // document.getElementById('content-' + i).focus();
   }
+
+  inputBlock(iPage, iBlock) {
+    // var element = document.getElementById('content-' + i)
+    // var heightContent = element.offsetHeight * 2.54 / 96; // Convert pixels to cm
+
+  }
+
+  addBlock() {
+
+  }
+
 }

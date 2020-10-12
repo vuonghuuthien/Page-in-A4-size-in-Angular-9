@@ -1,13 +1,19 @@
-<div class="page" *ngFor="let page of pages; index as i"
+<button type="button" class="buttonAdd" (click)="addBlock()">Add Block</button>
+<div *ngFor="let page of pages; index as i"
+  class="page" [id]="'page-' + i" 
   [style.height]="sizePage.height + 'cm'"
   [style.width]="sizePage.width + 'cm'"
+  [style.paddingTop]="paddingPage.top + 'cm'"
+  [style.paddingRight]="paddingPage.right + 'cm'"
+  [style.paddingBottom]="paddingPage.bottom + 'cm'"
+  [style.paddingLeft]="paddingPage.left + 'cm'" 
   (click)="clickA4(i)">
-  <div class="content" 
-    [style.paddingTop]="paddingPage.top + 'cm'"
-    [style.paddingRight]="paddingPage.right + 'cm'"
-    [style.paddingBottom]="paddingPage.bottom + 'cm'"
-    [style.paddingLeft]="paddingPage.left + 'cm'"  
-    [id]="'content-' + i" contenteditable="true"
-    (input)="inputContent($event.data, i)">
+  <div class="content" [id]="'page-' + i + '-content'">
+    <div *ngFor="let block of page.content; index as j"
+      class="block" [id]="'page-' + i + '-content' + '-block-' + j"
+      (input)="inputBlock(i, j)">
+      <div class="title">{{block.title}}</div>
+      <div class="value" contenteditable>{{block.value}}</div>
+    </div>
   </div>
 </div>

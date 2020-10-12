@@ -1,0 +1,114 @@
+{
+    "personalData": [
+        {
+            "firstName": "Max",
+            "lastName": "Muster",
+            "email": "max.musterman@outlook.com",
+            "birthday": "2020-09-25T00:00:00.000Z",
+            "telephone": "0123456789",
+            "job": "Freelancer",
+            "country": "Germany",
+            "postalCode": 12345,
+            "city": "None",
+            "title": 2,
+            "gender": 0,
+            "street": "Musterman 12",
+            "state": "",
+            "status": 1,
+            "showBirthday": true
+        }
+    ],
+    "skills": [
+        {
+            "subCategories": [
+                {
+                    "languages": [
+                        {
+                            "name": "languages.de",
+                            "rate": 5
+                        },
+                        {
+                            "name": "languages.al",
+                            "rate": 1
+                        },
+                        {
+                            "name": "languages.en",
+                            "rate": 5
+                        },
+                        {
+                            "name": "languages.fr",
+                            "rate": 4
+                        },
+                        {
+                            "name": "languages.it",
+                            "rate": 4
+                        }
+                    ],
+                    "pcKnowledge": [
+                        {
+                            "_id": "5f5ca07e4dba443f786ea7ae",
+                            "name": "Word"
+                        },
+                        {
+                            "_id": "5f5ca07e4dba443f786ea7af",
+                            "name": "Adobe Photoshop"
+                        },
+                        {
+                            "_id": "5f5fd46bb21df2444c39f317",
+                            "name": "Test"
+                        },
+                        {
+                            "_id": "5f5fd46bb21df2444c39f318",
+                            "name": "Excel"
+                        },
+                        {
+                            "_id": "5f5fd46bb21df2444c39f319",
+                            "name": "Ja"
+                        },
+                        {
+                            "_id": "5f72339552009b4244391972",
+                            "name": "Powerpoint"
+                        }
+                    ],
+                    "skillsOffer": [
+                        {
+                            "_id": "5f4a4e2d718d33092df2c327",
+                            "name": "Angular"
+                        },
+                        {
+                            "_id": "5f4a4e2d718d33092df2c327",
+                            "name": "Java"
+                        },
+                        {
+                            "_id": "5f4a4e2d718d33092df2c327",
+                            "name": "Typescript"
+                        },
+                        {
+                            "_id": "5f4a4e2d718d33092df2c327",
+                            "name": "html"
+                        },
+                        {
+                            "name": "Javascript"
+                        }
+                    ],
+                    "driveLicenses": [
+                        {
+                            "_id": "5f5ca07e4dba443f786ea7ac",
+                            "name": "B"
+                        },
+                        {
+                            "_id": "5f5ca07e4dba443f786ea7ad",
+                            "name": "C"
+                        },
+                        {
+                            "_id": "5f5f204faa5d0205180bd581",
+                            "name": "B"
+                        }
+                    ],
+                    "name": "",
+                    "qualifications": ""
+                }
+            ]
+        }
+    ]
+}

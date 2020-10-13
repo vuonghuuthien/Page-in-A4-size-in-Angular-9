@@ -19,8 +19,12 @@
     line-height: 1.5;
     border-radius: .2rem;
 }
+.container {
+    height: 100%;
+    width: 100%;
+}
 .page {
-    background: white;
+    // background: white;
     display: block;
     margin: 40px auto;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);

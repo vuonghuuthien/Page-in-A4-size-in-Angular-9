@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     bottom: 2, //cm
     left: 2 //cm
   }
+  color = 'black';
   pages = [
     {
       content: []
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ]
 
   heightPageWithoutPadding = this.convertCmtoPx(this.sizePage.height - (this.paddingPage.top + this.paddingPage.bottom));
+  elContainer = document.getElementById('container'); 
 
   constructor (){
 
@@ -61,14 +63,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     var elPage = document.getElementById('page-' + iPage); 
     var elPageContent = document.getElementById('page-' + iPage + '-content'); 
     for (let i = 0; i < this.data.length; i++) {
-      node = `<div class="block" [id]="page-${iPage}-content-block-${iBlock}"
-        (input)="inputBlock(${iPage}, ${iBlock})">
-        <div class="title">${this.data[i].title}</div>
-        <div class="value" contenteditable>${this.data[i].value}</div>
-      </div>`
+      node = this.getHTMLBlock(iPage, iBlock, this.data[i]);
       elPageContent.innerHTML = nodes + node;
       if (elPageContent.offsetHeight > this.heightPageWithoutPadding) {
-        
+        this.elContainer.innerHTML = 
       } else {
         nodes += node;
         elPageContent.innerHTML = nodes;
@@ -80,7 +78,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   }
 
-  clickA4(iPage) {
+  clickPage(iPage) {
     // document.getElementById('content-' + i).focus();
   }
 
@@ -100,5 +98,33 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   convertCmtoPx(cm) {
     return Math.round(cm * 96/2.54);
+  }
+
+  getHTMLBlock(iPage, iBlock, data) {
+    return `<div class="block" [id]="page-${iPage}-content-block-${iBlock}"
+              (input)="inputBlock(${iPage}, ${iBlock})">
+              <div class="title">${data.title}</div>
+              <div class="value" contenteditable>${data.value}</div>
+            </div>`;
+  }
+
+  getHTMLPage(iPage, iBlock, data) {
+    return `<div class="page" [id]="'page-' + ${iPage}" 
+              [style.height.cm]="${this.sizePage.height}"
+              [style.width.cm]="${this.sizePage.width}"
+              [style.paddingTop.cm]="${this.paddingPage.top}"
+              [style.paddingRight.cm]="${this.paddingPage.right}"
+              [style.paddingBottom.cm]="${this.paddingPage.bottom}"
+              [style.paddingLeft.cm]="${this.paddingPage.left}" 
+              (click)="clickPage(${iPage})">
+              <div class="content" [id]="'page-' + i + '-content'">
+                <div *ngFor="let block of page.content; index as j"
+                  class="block" [id]="'page-' + i + '-content' + '-block-' + j"
+                  (input)="inputBlock(i, j)">
+                  <div class="title">{{block.title}}</div>
+                  <div class="value" contenteditable>{{block.value}}</div>
+                </div>
+              </div>
+            </div>`;
   }
 }

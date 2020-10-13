@@ -1,21 +1,14 @@
 <button type="button" class="buttonAdd" (click)="addBlock()">Add Block</button>
 <div class="container" id="container">
-  <div *ngFor="let page of pages; index as i"
-    class="page" [id]="'page-' + i" 
+  <div class="page"
     [style.height.cm]="sizePage.height"
     [style.width.cm]="sizePage.width"
     [style.paddingTop.cm]="paddingPage.top"
     [style.paddingRight.cm]="paddingPage.right"
     [style.paddingBottom.cm]="paddingPage.bottom"
     [style.paddingLeft.cm]="paddingPage.left" 
-    (click)="clickPage(i)">
-    <div class="content" [id]="'page-' + i + '-content'">
-      <div *ngFor="let block of page.content; index as j"
-        class="block" [id]="'page-' + i + '-content' + '-block-' + j"
-        (input)="inputBlock(i, j)">
-        <div class="title">{{block.title}}</div>
-        <div class="value" contenteditable>{{block.value}}</div>
-      </div>
+    (click)="clickPage(0)">
+    <div class="content" id="page-0-content">
     </div>
   </div>
 </div>

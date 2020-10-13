@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   clickPage(iPage) {
-    // document.getElementById('content-' + i).focus();
+    document.getElementById('page-' + iPage + '-content').focus();
   }
 
   inputBlock(iPage, iBlock) {

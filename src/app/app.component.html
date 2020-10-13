@@ -1,5 +1,5 @@
 <button type="button" class="buttonAdd" (click)="addBlock()">Add Block</button>
-<div class="container">
+<div class="container" id="container">
   <div *ngFor="let page of pages; index as i"
     class="page" [id]="'page-' + i" 
     [style.height.cm]="sizePage.height"
@@ -8,7 +8,7 @@
     [style.paddingRight.cm]="paddingPage.right"
     [style.paddingBottom.cm]="paddingPage.bottom"
     [style.paddingLeft.cm]="paddingPage.left" 
-    (click)="clickA4(i)">
+    (click)="clickPage(i)">
     <div class="content" [id]="'page-' + i + '-content'">
       <div *ngFor="let block of page.content; index as j"
         class="block" [id]="'page-' + i + '-content' + '-block-' + j"

@@ -52,24 +52,35 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.insertContentBlock();
+    this.insertListData();
   }
 
-  insertContentBlock() {
-    var nodes = "";
-    var node = "";
-    var iPage = 0; 
-    var iBlock = 0; 
-    var elPage = document.getElementById('page-' + iPage); 
-    var elPageContent = document.getElementById('page-' + iPage + '-content'); 
+  insertListData() {
+    var html_ListBlock = ""; // HTML List Block of Current Page
+    var html_Block = ""; // HTML Block of Current Block
+    var iPage = 0; // index of Current Page
+    var iBlock = 0; // index of Current Block
+    var elPageContent = document.getElementById('page-' + iPage + '-content'); // Get element Content of Current Page
     for (let i = 0; i < this.data.length; i++) {
-      node = this.getHTMLBlock(iPage, iBlock, this.data[i]);
-      elPageContent.innerHTML = nodes + node;
+      // Create HTML Block this.data[i]
+      html_Block = this.createHTMLBlock(iPage, iBlock, this.data[i]);
+      // InnerHTML ListBlock and Current Block to Current Page
+      elPageContent.innerHTML = html_ListBlock + html_Block; 
+      // Check Content Height of Current Page
       if (elPageContent.offsetHeight > this.heightPageWithoutPadding) {
-        this.elContainer.innerHTML = 
+        // InnerHTML does not have Current Block
+        elPageContent.innerHTML = html_ListBlock;
+        // To the next page. Index Current Page is: 0 + 1 = 1
+        iPage += 1;
+        // Create HTML Page
+        this.elContainer.innerHTML = this.createHTMLPage(iPage);
+        // Get element Content of Current Page
+        elPageContent = document.getElementById('page-' + iPage + '-content'); 
+        html_ListBlock = html_Block; // HTML List Block of Current Page
+        elPageContent.innerHTML = html_ListBlock;
       } else {
-        nodes += node;
-        elPageContent.innerHTML = nodes;
+        html_ListBlock += html_Block;
+        elPageContent.innerHTML = html_ListBlock;
       }
       console.log(elPageContent.offsetHeight);
     }
@@ -100,7 +111,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     return Math.round(cm * 96/2.54);
   }
 
-  getHTMLBlock(iPage, iBlock, data) {
+  createHTMLBlock(iPage, iBlock, data) {
     return `<div class="block" [id]="page-${iPage}-content-block-${iBlock}"
               (input)="inputBlock(${iPage}, ${iBlock})">
               <div class="title">${data.title}</div>
@@ -108,8 +119,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             </div>`;
   }
 
-  getHTMLPage(iPage, iBlock, data) {
-    return `<div class="page" [id]="'page-' + ${iPage}" 
+  createHTMLPage(iPage) {
+    return `<div class="page" id="page-${iPage}" 
               [style.height.cm]="${this.sizePage.height}"
               [style.width.cm]="${this.sizePage.width}"
               [style.paddingTop.cm]="${this.paddingPage.top}"
@@ -117,13 +128,7 @@ export class AppComponent implements OnInit, AfterViewInit {
               [style.paddingBottom.cm]="${this.paddingPage.bottom}"
               [style.paddingLeft.cm]="${this.paddingPage.left}" 
               (click)="clickPage(${iPage})">
-              <div class="content" [id]="'page-' + i + '-content'">
-                <div *ngFor="let block of page.content; index as j"
-                  class="block" [id]="'page-' + i + '-content' + '-block-' + j"
-                  (input)="inputBlock(i, j)">
-                  <div class="title">{{block.title}}</div>
-                  <div class="value" contenteditable>{{block.value}}</div>
-                </div>
+              <div class="content" id="page-${iPage}-content">
               </div>
             </div>`;
   }

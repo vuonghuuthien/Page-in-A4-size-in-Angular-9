@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +39,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   ]
 
-  constructor (private renderer: Renderer2){
+  heightPageWithoutPadding = this.convertCmtoPx(this.sizePage.height - (this.paddingPage.top + this.paddingPage.bottom));
+
+  constructor (){
 
   }
   
@@ -52,20 +54,28 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   insertContentBlock() {
+    var nodes = "";
+    var node = "";
     var iPage = 0; 
     var iBlock = 0; 
-    var page = document.getElementById('page-' + iPage + '-content'); 
-    var nodes = "";
+    var elPage = document.getElementById('page-' + iPage); 
+    var elPageContent = document.getElementById('page-' + iPage + '-content'); 
     for (let i = 0; i < this.data.length; i++) {
-      nodes += `<div class="block" [id]="page-${iPage}-content-block-${iBlock}"
+      node = `<div class="block" [id]="page-${iPage}-content-block-${iBlock}"
         (input)="inputBlock(${iPage}, ${iBlock})">
         <div class="title">${this.data[i].title}</div>
         <div class="value" contenteditable>${this.data[i].value}</div>
       </div>`
+      elPageContent.innerHTML = nodes + node;
+      if (elPageContent.offsetHeight > this.heightPageWithoutPadding) {
+        
+      } else {
+        nodes += node;
+        elPageContent.innerHTML = nodes;
+      }
+      console.log(elPageContent.offsetHeight);
     }
     // nodes += `<button type="button" class="buttonAdd" (click)="addBlock()">Add Block</button>`;
-
-    page.innerHTML = nodes;
     
 
   }
@@ -84,4 +94,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   }
 
+  convertPxToCm(px) {
+    return Math.round(px * 2.54/96 * 100) / 100;
+  }
+
+  convertCmtoPx(cm) {
+    return Math.round(cm * 96/2.54);
+  }
 }

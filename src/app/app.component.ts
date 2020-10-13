@@ -6,7 +6,7 @@ import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewEncapsulation }
   styleUrls: ['./app.component.scss'], 
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   sizePage = {
     width: 21, //cm
     height: 29.7 //cm
@@ -55,6 +55,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.insertListData();
   }
 
+  ngAfterViewChecked() {
+
+  }
+
   insertListData() {
     var html_ListBlock = ""; // HTML List Block of Current Page
     var html_Block = ""; // HTML Block of Current Block
@@ -83,6 +87,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         elPageContent.innerHTML = html_ListBlock;
       }
       console.log(elPageContent.offsetHeight);
+      iBlock += 1;
     }
     // nodes += `<button type="button" class="buttonAdd" (click)="addBlock()">Add Block</button>`;
     
@@ -94,6 +99,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   inputBlock(iPage, iBlock) {
+    console.log(iPage);
+    console.log(iBlock);
     // var element = document.getElementById('content-' + i)
     // var heightContent = element.offsetHeight * 2.54 / 96; // Convert pixels to cm
 
@@ -112,10 +119,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   createHTMLBlock(iPage, iBlock, data) {
-    return `<div class="block" [id]="page-${iPage}-content-block-${iBlock}"
-              (input)="inputBlock(${iPage}, ${iBlock})">
+    return `<div class="block" id="page-${iPage}-content-block-${iBlock}">
               <div class="title">${data.title}</div>
-              <div class="value" contenteditable>${data.value}</div>
+              <div class="value" (input)="inputBlock(${iPage}, ${iBlock})"
+                contenteditable>${data.value}</div>
             </div>`;
   }
 

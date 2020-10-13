@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +6,7 @@ import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewEncapsulation }
   styleUrls: ['./app.component.scss'], 
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class AppComponent implements OnInit, AfterViewInit {
   sizePage = {
     width: 21, //cm
     height: 29.7 //cm
@@ -41,9 +41,10 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ]
 
   heightPageWithoutPadding = this.convertCmtoPx(this.sizePage.height - (this.paddingPage.top + this.paddingPage.bottom));
-  elContainer = document.getElementById('container'); 
+  elContainer;
+  anchorsBlockValue;
 
-  constructor (){
+  constructor (private elementRef: ElementRef){
 
   }
   
@@ -52,11 +53,12 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   ngAfterViewInit() {
+    this.elContainer = document.getElementById('container');
     this.insertListData();
-  }
-
-  ngAfterViewChecked() {
-
+    this.anchorsBlockValue = this.elementRef.nativeElement.querySelectorAll('.block .value');
+    this.anchorsBlockValue.forEach((anchor: HTMLAnchorElement) => {
+      anchor.addEventListener('input', this.handleAnchorBlockValue)
+    })
   }
 
   insertListData() {
@@ -94,15 +96,19 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   }
 
-  clickPage(iPage) {
-    document.getElementById('page-' + iPage + '-content').focus();
+  handleAnchorBlockValue = (event: Event) => {
+    // Prevent opening anchors the default way
+    event.preventDefault();
+    const anchor = event.target as HTMLAnchorElement;
+    const id_anchorParentEl = anchor.parentElement.getAttribute('id'); // page-iPage-content-block-iBlock
+    const iPage = id_anchorParentEl.slice(id_anchorParentEl.indexOf("page-") + ("page-").length, id_anchorParentEl.indexOf("-content"));
+    const iBlock = id_anchorParentEl.slice(id_anchorParentEl.indexOf("block-") + ("block-").length, id_anchorParentEl.length);
+    this.inputBlock(iPage, iBlock);
   }
 
   inputBlock(iPage, iBlock) {
     console.log(iPage);
     console.log(iBlock);
-    // var element = document.getElementById('content-' + i)
-    // var heightContent = element.offsetHeight * 2.54 / 96; // Convert pixels to cm
 
   }
 
@@ -121,8 +127,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   createHTMLBlock(iPage, iBlock, data) {
     return `<div class="block" id="page-${iPage}-content-block-${iBlock}">
               <div class="title">${data.title}</div>
-              <div class="value" (input)="inputBlock(${iPage}, ${iBlock})"
-                contenteditable>${data.value}</div>
+              <div class="value" contenteditable>${data.value}</div>
             </div>`;
   }
 
@@ -133,8 +138,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
               [style.paddingTop.cm]="${this.paddingPage.top}"
               [style.paddingRight.cm]="${this.paddingPage.right}"
               [style.paddingBottom.cm]="${this.paddingPage.bottom}"
-              [style.paddingLeft.cm]="${this.paddingPage.left}" 
-              (click)="clickPage(${iPage})">
+              [style.paddingLeft.cm]="${this.paddingPage.left}">
               <div class="content" id="page-${iPage}-content">
               </div>
             </div>`;

@@ -62,27 +62,24 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   insertListData() {
-    var html_ListBlock = ""; // HTML List Block of Current Page
-    var html_Block = ""; // HTML Block of Current Block
-    var iPage = 0; // index of Current Page
-    var iBlock = 0; // index of Current Block
-    var elPageContent = document.getElementById('page-' + iPage + '-content'); // Get element Content of Current Page
+    var html_ListBlock = "";
+    var html_Block = "";
+    var iPage = 0;
+    var iBlock = 0;
+    var elPageContent = document.getElementById('page-' + iPage + '-content');
     for (let i = 0; i < this.data.length; i++) {
       // Create HTML Block this.data[i]
       html_Block = this.createHTMLBlock(iPage, iBlock, this.data[i]);
-      // InnerHTML ListBlock and Current Block to Current Page
       elPageContent.innerHTML = html_ListBlock + html_Block; 
-      // Check Content Height of Current Page
+
       if (elPageContent.offsetHeight > this.heightPageWithoutPadding) {
-        // InnerHTML does not have Current Block
         elPageContent.innerHTML = html_ListBlock;
-        // To the next page. Index Current Page is: 0 + 1 = 1
+
         iPage += 1;
-        // Create HTML Page
         this.elContainer.innerHTML = this.createHTMLPage(iPage);
-        // Get element Content of Current Page
         elPageContent = document.getElementById('page-' + iPage + '-content'); 
-        html_ListBlock = html_Block; // HTML List Block of Current Page
+        
+        html_ListBlock = html_Block;
         elPageContent.innerHTML = html_ListBlock;
       } else {
         html_ListBlock += html_Block;
@@ -103,13 +100,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     const id_anchorParentEl = anchor.parentElement.getAttribute('id'); // page-iPage-content-block-iBlock
     const iPage = id_anchorParentEl.slice(id_anchorParentEl.indexOf("page-") + ("page-").length, id_anchorParentEl.indexOf("-content"));
     const iBlock = id_anchorParentEl.slice(id_anchorParentEl.indexOf("block-") + ("block-").length, id_anchorParentEl.length);
-    this.inputBlock(iPage, iBlock);
-  }
-
-  inputBlock(iPage, iBlock) {
+    var elPageContent = anchor.parentElement.parentElement;
     console.log(iPage);
     console.log(iBlock);
+    console.log(elPageContent.offsetHeight);
+    if (elPageContent.offsetHeight > this.heightPageWithoutPadding) {
+      
+    } else {
 
+    }
   }
 
   addBlock() {

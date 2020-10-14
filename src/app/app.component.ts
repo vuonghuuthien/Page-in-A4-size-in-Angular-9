@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +6,7 @@ import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewEnc
   styleUrls: ['./app.component.scss'], 
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   sizePage = {
     width: 21, //cm
     height: 29.7 //cm
@@ -20,124 +20,124 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   data = [
     {
-      title: "Name",
+      title: "Name_1",
       value: "Thomas K.Wilson"
     }, {
-      title: "Email",
+      title: "Email_1",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_1",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_1",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_2",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_2",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_2",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_2",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_3",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_3",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_3",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_3",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_4",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_4",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_4",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_4",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_5",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_5",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_5",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_5",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_6",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_6",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_6",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_6",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_7",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_7",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_7",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_7",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_8",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_8",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_8",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_8",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_9",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_9",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_9",
       value: "0123 456 789"
     }, {
-      title: "Job",
+      title: "Job_9",
       value: "Teacher"
     }, {
-      title: "Email",
+      title: "Name_10",
+      value: "Thomas K.Wilson"
+    }, {
+      title: "Email_10",
       value: "thomas.k.wilson@gmail.com"
     }, {
-      title: "Telephone",
+      title: "Telephone_10",
       value: "0123 456 789"
     }, {
-      title: "Job",
-      value: "Teacher"
-    }, {
-      title: "Email",
-      value: "thomas.k.wilson@gmail.com"
-    }, {
-      title: "Telephone",
-      value: "0123 456 789"
-    }, {
-      title: "Job",
-      value: "Teacher"
-    }, {
-      title: "Email",
-      value: "thomas.k.wilson@gmail.com"
-    }, {
-      title: "Telephone",
-      value: "0123 456 789"
-    }, {
-      title: "Job",
-      value: "Teacher"
-    }, {
-      title: "Email",
-      value: "thomas.k.wilson@gmail.com"
-    }, {
-      title: "Telephone",
-      value: "0123 456 789"
-    }, {
-      title: "Job",
+      title: "Job_10",
       value: "Teacher"
     }
   ]
@@ -145,7 +145,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   heightPageWithoutPadding = this.convertCmtoPx(this.sizePage.height - (this.paddingPage.top + this.paddingPage.bottom));
   elContainer;
   anchorsBlockValue;
-  pageContent = [[]]; // Ex: [[1, 2, 3], [4, 5]]
+  pageContent = [[]]; // Ex: [[0, 1, 2, 3], [4, 5]]
 
   constructor (private elementRef: ElementRef){
 
@@ -157,11 +157,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.elContainer = document.getElementById('container');
+    this.elContainer.innerHTML += this.createHTMLPage(0);
     this.insertListData();
     this.anchorsBlockValue = this.elementRef.nativeElement.querySelectorAll('.block .value');
     this.anchorsBlockValue.forEach((anchor: HTMLAnchorElement) => {
       anchor.addEventListener('input', this.handleAnchorBlockValue)
-    })
+    });
   }
 
   insertListData() {
@@ -194,12 +195,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         html_ListBlock += html_Block;
         elPageContent.innerHTML = html_ListBlock;
       }
-      console.log(elPageContent.offsetHeight);
       iBlock += 1;
     }
     // nodes += `<button type="button" class="buttonAdd" (click)="addBlock()">Add Block</button>`;
-    
-
   }
 
   handleAnchorBlockValue = (event: Event) => {
@@ -212,29 +210,49 @@ export class AppComponent implements OnInit, AfterViewInit {
     var elPageContent = anchor.parentElement.parentElement;
     if (elPageContent.offsetHeight > this.heightPageWithoutPadding) {
       if (!this.pageContent[iPage + 1]) {
-        this.elContainer.innerHTML += this.createHTMLPage(iPage);
+        this.elContainer.innerHTML += this.createHTMLPage(iPage + 1);
         this.pageContent[iPage + 1] = [];
       }
       if (this.pageContent[iPage].length == 1) {
         // This is (Height Block == Height Content) > Height Page
-
+        alert("To be continue ...");
       } else {
-        var iLastBlock_PageContent = this.pageContent[iPage][this.pageContent[iPage].length - 1];
-        var elLastBlock_PageContent = document.getElementById('page-' + iPage + '-content-block-' + iLastBlock_PageContent); 
-        elLastBlock_PageContent.remove();
-        this.pageContent[iPage].pop();
+        while (iPage < this.pageContent.length) {
 
-        iPage += 1;
-        elLastBlock_PageContent.setAttribute('id', 'page-' + iPage + '-content-block-' + iLastBlock_PageContent); 
-        elPageContent = document.getElementById('page-' + iPage + '-content'); 
-        elPageContent.innerHTML = elLastBlock_PageContent.outerHTML + elPageContent.innerHTML;
-        this.pageContent[iPage].unshift(iLastBlock_PageContent);
+          var elPageContent = document.getElementById('page-' + iPage + '-content'); 
+          var iLastBlock_PageContent = this.pageContent[iPage][this.pageContent[iPage].length - 1];
+          var elLastBlock_PageContent = document.getElementById('page-' + iPage + '-content-block-' + iLastBlock_PageContent); 
+          elLastBlock_PageContent.remove();
+          this.pageContent[iPage].pop();
+    
+          if (!this.pageContent[iPage + 1]) {
+            this.elContainer.innerHTML += this.createHTMLPage(iPage + 1);
+            this.pageContent[iPage + 1] = [];
+          }
+
+          elLastBlock_PageContent.setAttribute('id', 'page-' + (iPage + 1) + '-content-block-' + iLastBlock_PageContent); 
+          var elNextPageContent = document.getElementById('page-' + (iPage + 1) + '-content'); 
+          elNextPageContent.innerHTML = elLastBlock_PageContent.outerHTML + elNextPageContent.innerHTML;
+          this.pageContent[iPage + 1].unshift(iLastBlock_PageContent);
+    
+          if (elPageContent.offsetHeight <= this.heightPageWithoutPadding) {
+            if (elNextPageContent.offsetHeight <= this.heightPageWithoutPadding) {
+              break;
+            } else {
+              iPage += 1;
+            }
+          }
+        }
       }
+      this.anchorsBlockValue = this.elementRef.nativeElement.querySelectorAll('.block .value');
+      this.anchorsBlockValue.forEach((anchor: HTMLAnchorElement) => {
+        anchor.addEventListener('input', this.handleAnchorBlockValue)
+      });
     }
   }
 
   addBlock() {
-
+    alert("To be continue ...");
   }
 
   convertPxToCm(px) {
@@ -267,4 +285,10 @@ export class AppComponent implements OnInit, AfterViewInit {
             </div>`;
   }
 
+  ngOnDestroy() {
+    // Cleanup by removing the event listeners on destroy
+    this.anchorsBlockValue.forEach((anchor: HTMLAnchorElement) => {
+      anchor.removeEventListener('input', this.handleAnchorBlockValue)
+    })
+  }
 }

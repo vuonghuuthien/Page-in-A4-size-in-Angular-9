@@ -207,11 +207,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     event.preventDefault();
     const anchor = event.target as HTMLAnchorElement;
     const id_anchorParentEl = anchor.parentElement.getAttribute('id'); // page-iPage-content-block-iBlock
-    const iPage = id_anchorParentEl.slice(id_anchorParentEl.indexOf("page-") + ("page-").length, id_anchorParentEl.indexOf("-content"));
-    const iBlock = id_anchorParentEl.slice(id_anchorParentEl.indexOf("block-") + ("block-").length, id_anchorParentEl.length);
+    const iPage = Number(id_anchorParentEl.slice(id_anchorParentEl.indexOf("page-") + ("page-").length, id_anchorParentEl.indexOf("-content")));
+    const iBlock = Number(id_anchorParentEl.slice(id_anchorParentEl.indexOf("block-") + ("block-").length, id_anchorParentEl.length));
     var elPageContent = anchor.parentElement.parentElement;
     if (elPageContent.offsetHeight > this.heightPageWithoutPadding) {
-      if (this.pageContent[iPage + 1] == null) {
+      if (!this.pageContent[iPage + 1]) {
         this.elContainer.innerHTML += this.createHTMLPage(iPage);
         // elPageContent = document.getElementById('page-' + iPage + '-content'); 
         // this.pageContent[iPage].pop();
@@ -225,13 +225,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       } else {
         var iLastBlock_PageContent = this.pageContent[iPage][this.pageContent[iPage].length - 1];
         var elLastBlock_PageContent = document.getElementById('page-' + iPage + '-content-block-' + iLastBlock_PageContent); 
-        console.log('page-' + iPage + '-content-block-' + iLastBlock_PageContent);
-        console.log(elLastBlock_PageContent);
-        if (iLastBlock_PageContent == iBlock) {
+        elLastBlock_PageContent.setAttribute('id', 'page-' + iPage + '-content-block-' + iLastBlock_PageContent); 
 
-        } else {
-           
-        }
       }
 
     } else {

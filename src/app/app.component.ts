@@ -17,12 +17,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     bottom: 2, //cm
     left: 2 //cm
   }
-  color = 'black';
-  pages = [
-    {
-      content: []
-    }
-  ]
 
   data = [
     {
@@ -151,6 +145,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   heightPageWithoutPadding = this.convertCmtoPx(this.sizePage.height - (this.paddingPage.top + this.paddingPage.bottom));
   elContainer;
   anchorsBlockValue;
+  pageContent = [[]]; // Ex: [[1, 2, 3], [4, 5]]
 
   constructor (private elementRef: ElementRef){
 
@@ -176,7 +171,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     var iBlock = 0;
     var elPageContent = document.getElementById('page-' + iPage + '-content');
     for (let i = 0; i < this.data.length; i++) {
-      // Create HTML Block this.data[i]
+      
       html_Block = this.createHTMLBlock(iPage, iBlock, this.data[i]);
       elPageContent.innerHTML = html_ListBlock + html_Block; 
 
@@ -187,9 +182,15 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.elContainer.innerHTML += this.createHTMLPage(iPage);
         elPageContent = document.getElementById('page-' + iPage + '-content'); 
         
+        this.pageContent[iPage] = [];
+        this.pageContent[iPage].push(iBlock);
+
+        html_Block = this.createHTMLBlock(iPage, iBlock, this.data[i]);
         html_ListBlock = html_Block;
         elPageContent.innerHTML = html_ListBlock;
       } else {
+        this.pageContent[iPage].push(iBlock);
+        
         html_ListBlock += html_Block;
         elPageContent.innerHTML = html_ListBlock;
       }
@@ -209,11 +210,30 @@ export class AppComponent implements OnInit, AfterViewInit {
     const iPage = id_anchorParentEl.slice(id_anchorParentEl.indexOf("page-") + ("page-").length, id_anchorParentEl.indexOf("-content"));
     const iBlock = id_anchorParentEl.slice(id_anchorParentEl.indexOf("block-") + ("block-").length, id_anchorParentEl.length);
     var elPageContent = anchor.parentElement.parentElement;
-    console.log(iPage);
-    console.log(iBlock);
-    console.log(elPageContent.offsetHeight);
     if (elPageContent.offsetHeight > this.heightPageWithoutPadding) {
-      
+      if (this.pageContent[iPage + 1] == null) {
+        this.elContainer.innerHTML += this.createHTMLPage(iPage);
+        // elPageContent = document.getElementById('page-' + iPage + '-content'); 
+        // this.pageContent[iPage].pop();
+        this.pageContent[iPage + 1] = [];
+        // this.pageContent[iPage + 1].push(iBlock);
+
+      }
+      if (this.pageContent[iPage].length == 1) {
+        // This is (Height Block == Height Content) > Height Page
+
+      } else {
+        var iLastBlock_PageContent = this.pageContent[iPage][this.pageContent[iPage].length - 1];
+        var elLastBlock_PageContent = document.getElementById('page-' + iPage + '-content-block-' + iLastBlock_PageContent); 
+        console.log('page-' + iPage + '-content-block-' + iLastBlock_PageContent);
+        console.log(elLastBlock_PageContent);
+        if (iLastBlock_PageContent == iBlock) {
+
+        } else {
+           
+        }
+      }
+
     } else {
 
     }
@@ -242,7 +262,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     return `<div class="page" id="page-${iPage}" 
               style="
                 height: ${this.sizePage.height}cm;
-                width:  ${this.sizePage.width}cm;
+                width: ${this.sizePage.width}cm;
                 padding-top: ${this.paddingPage.top}cm;
                 padding-right: ${this.paddingPage.right}cm;
                 padding-bottom: ${this.paddingPage.bottom}cm;
@@ -252,4 +272,5 @@ export class AppComponent implements OnInit, AfterViewInit {
               </div>
             </div>`;
   }
+
 }

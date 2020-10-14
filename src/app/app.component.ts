@@ -37,6 +37,114 @@ export class AppComponent implements OnInit, AfterViewInit {
     }, {
       title: "Job",
       value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
+    }, {
+      title: "Email",
+      value: "thomas.k.wilson@gmail.com"
+    }, {
+      title: "Telephone",
+      value: "0123 456 789"
+    }, {
+      title: "Job",
+      value: "Teacher"
     }
   ]
 
@@ -76,7 +184,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         elPageContent.innerHTML = html_ListBlock;
 
         iPage += 1;
-        this.elContainer.innerHTML = this.createHTMLPage(iPage);
+        this.elContainer.innerHTML += this.createHTMLPage(iPage);
         elPageContent = document.getElementById('page-' + iPage + '-content'); 
         
         html_ListBlock = html_Block;
@@ -132,12 +240,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   createHTMLPage(iPage) {
     return `<div class="page" id="page-${iPage}" 
-              [style.height.cm]="${this.sizePage.height}"
-              [style.width.cm]="${this.sizePage.width}"
-              [style.paddingTop.cm]="${this.paddingPage.top}"
-              [style.paddingRight.cm]="${this.paddingPage.right}"
-              [style.paddingBottom.cm]="${this.paddingPage.bottom}"
-              [style.paddingLeft.cm]="${this.paddingPage.left}">
+              style="
+                height: ${this.sizePage.height}cm;
+                width:  ${this.sizePage.width}cm;
+                padding-top: ${this.paddingPage.top}cm;
+                padding-right: ${this.paddingPage.right}cm;
+                padding-bottom: ${this.paddingPage.bottom}cm;
+                padding-left: ${this.paddingPage.left}cm;
+              ">
               <div class="content" id="page-${iPage}-content">
               </div>
             </div>`;
